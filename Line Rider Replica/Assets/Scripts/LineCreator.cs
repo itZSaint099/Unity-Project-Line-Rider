@@ -2,8 +2,9 @@
 
 public class LineCreator : MonoBehaviour
 {
-    public GameObject linePrefab;
+    public GameObject[] linePrefabs;
 
+    LineCreator listLines;
     Line activeLine;
 
     // Update is called once per frame
@@ -11,7 +12,8 @@ public class LineCreator : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            GameObject lineGO = Instantiate(linePrefab);
+            int index = ChangeLine();
+            GameObject lineGO = Instantiate(linePrefabs[index]);
             activeLine = lineGO.GetComponent<Line>();
         }
 
@@ -25,5 +27,11 @@ public class LineCreator : MonoBehaviour
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             activeLine.UpdateLine(mousePos);
         }
+    }
+
+    int ChangeLine()
+    {
+        int index = Random.Range(0, 3);
+        return index;
     }
 }
