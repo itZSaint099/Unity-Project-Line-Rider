@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class LineCreator : MonoBehaviour
 {
     public GameObject[] linePrefabs;
 
-    LineCreator listLines;
     Line activeLine;
 
     // Update is called once per frame
@@ -12,7 +12,13 @@ public class LineCreator : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            int index = ChangeLine();
+            int index = 0;
+            IEnumerator WaitForLine()
+            {
+                yield return new WaitForSeconds(5);
+                index = ChangeLine();
+            }
+            index = StartCoroutine(WaitForLine());
             GameObject lineGO = Instantiate(linePrefabs[index]);
             activeLine = lineGO.GetComponent<Line>();
         }
